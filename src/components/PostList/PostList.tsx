@@ -4,20 +4,24 @@
 
 import React from "react";
 import { useEffect, useState } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHeart} from '@fortawesome/free-solid-svg-icons'
+
+
+
 
 type Post ={
   id:number,
   title: string,
   body: string;
+  isFavorite: boolean,
 }
 
 
-export const PostList=()=>{
+
+
+export const PostList=({id,title,body,isFavorite}:Post)=>{
   const [posts, setPosts] = useState<Post[]>([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [favoriteIds, setFavoriteIds] = useState<[]>([]);
-  const [likedIds, setLikedIds] = useState<number[]>([]);
-  const [dislikedIds, setDislikedIds] = useState<number[]>([]);
 
 const fetchPostData = async()=>{
 
@@ -26,8 +30,8 @@ const fetchPostData = async()=>{
     if(!res.ok){
       throw new Error('Something went wrong');
     }
-const data = await res.json();
-setPosts(data)
+const {posts} = await res.json();
+setPosts(posts)
   }catch(error){
     console.log(error)
   }
@@ -37,16 +41,23 @@ useEffect(()=>{
   fetchPostData()
 },[])
 
+
+
+
 return (
   <div>
-<h2>Lista postów:</h2>
-<ul>
-        {/* Mapujemy każdy post i wyświetlamy jego tytuł */}
-        {posts.map(post => (
-          <li key={post.id}>{post.title}</li>
-        ))}
-      </ul>
-
+    <h2>Lista postów:</h2>
+    <ul>
+      {/* Mapujemy każdy post i wyświetlamy jego tytuł */}
+      {posts.map((post) => (
+        <li key={post.id}>
+          {post.title}
+          <button onClick={toggleFavorite}>
+            <FontAwesomeIcon icon={faHeart} color={isFavorite ? "#e60000" : "text-gray-400"} />
+          </button>
+        </li>
+      ))}
+    </ul>
   </div>
 )
 

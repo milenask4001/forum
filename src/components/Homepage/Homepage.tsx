@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import { Link } from "react-router-dom";
 // -Homepage - strona powitalna, zawiera informacje o liczbe użytkowników na stronie (pobierane z API), liczbe aktualnie dostępnych postów oraz krótkie 
 // przywitanie z przekierowaniem na forum
 
@@ -19,8 +20,8 @@ export const Homepage = ({ id }: Post) => {
       if (!res.ok) {
         throw new Error("Something went wrong");
       }
-      const data = await res.json();
-      setPostsCount(data.posts.length);
+      const {posts} = await res.json();
+      setPostsCount(posts.length);
     } catch (error) {
       console.log(error);
     }
@@ -33,8 +34,8 @@ export const Homepage = ({ id }: Post) => {
       if (!res.ok) {
         throw new Error("Something went wrong");
       }
-      const data = await res.json();
-      setUserCount(data.users.length)
+      const {users} = await res.json();
+      setUserCount(users.length)
       console.log(postsCount); 
     } catch (error) {
       console.log(error);
@@ -52,7 +53,7 @@ export const Homepage = ({ id }: Post) => {
       <h2>Witamy na forum</h2>
       <p>Liczba użytkowników: {userCount}</p>
       <p>Liczba postów: {postsCount}</p>
-    
+   <Link to="/PostList">Przejdź do forum</Link>
 
    
     </div>
