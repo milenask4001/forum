@@ -4,8 +4,7 @@
 
 import React from "react";
 import { useEffect, useState } from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHeart} from '@fortawesome/free-solid-svg-icons'
+import { FavoriteButton } from "../Context/AppContext";
 
 
 
@@ -52,9 +51,8 @@ return (
       {posts.map((post) => (
         <li key={post.id}>
           {post.title}
-          <button onClick={toggleFavorite}>
-            <FontAwesomeIcon icon={faHeart} color={isFavorite ? "#e60000" : "text-gray-400"} />
-          </button>
+          <FavoriteButton/>
+        
         </li>
       ))}
     </ul>
